@@ -27,7 +27,6 @@ namespace AndreAirLinesAPI.Controllers
         {
             return await _context.Flight.Include(flight => flight.Destination)
                                         .Include(flight => flight.Origin)
-                                        .Include(flight => flight.Passenger)
                                         .Include(flight => flight.Aircraft)
                                         .ToListAsync();
         }
@@ -39,7 +38,6 @@ namespace AndreAirLinesAPI.Controllers
             var flight = await _context.Flight.Include(flight => flight.Aircraft)
                                               .Include(flight => flight.Destination)
                                               .Include(flight => flight.Origin)
-                                              .Include(flight => flight.Passenger)
                                               .Where(flight => flight.Id == id).SingleOrDefaultAsync();
 
             return flight;
@@ -81,13 +79,13 @@ namespace AndreAirLinesAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Flight>> PostFlight(Flight flight)
         {
-            var destination = await _context.Airport.Where(airport => airport.Acronym == flight.Destination.Acronym).FirstOrDefaultAsync();
+            var destination = await _context.Airport.Where(airport => airport.IATA_Code == flight.Destination.IATA_Code).FirstOrDefaultAsync();
             if (destination != null)
             {
                 flight.Destination = destination;
             }
 
-            var origin = await _context.Airport.Where(airport => airport.Acronym == flight.Origin.Acronym).FirstOrDefaultAsync();
+            var origin = await _context.Airport.Where(airport => airport.IATA_Code == flight.Origin.IATA_Code).FirstOrDefaultAsync();
             if (origin != null)
             {
                 flight.Origin = origin;
@@ -97,12 +95,6 @@ namespace AndreAirLinesAPI.Controllers
             if (aircraft != null)
             {
                 flight.Aircraft = aircraft;
-            }
-
-            var passenger = await _context.Passenger.Where(passenger => passenger.Cpf == flight.Passenger.Cpf).FirstOrDefaultAsync();
-            if (passenger != null)
-            {
-                flight.Passenger = passenger;
             }
 
 

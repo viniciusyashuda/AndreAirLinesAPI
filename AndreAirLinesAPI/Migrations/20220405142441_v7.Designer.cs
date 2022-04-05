@@ -4,14 +4,16 @@ using AndreAirLinesAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AndreAirLinesAPI.Migrations
 {
     [DbContext(typeof(AndreAirLinesAPIContext))]
-    partial class AndreAirLinesAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20220405142441_v7")]
+    partial class v7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

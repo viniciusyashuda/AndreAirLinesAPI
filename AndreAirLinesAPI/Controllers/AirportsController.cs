@@ -34,7 +34,7 @@ namespace AndreAirLinesAPI.Controllers
         public async Task<ActionResult<Airport>> GetAirport(string id)
         {
             var airport = await _context.Airport.Include(airport => airport.Address)
-                                                .Where(airport => airport.Acronym == id).SingleOrDefaultAsync();
+                                                .Where(airport => airport.IATA_Code == id).SingleOrDefaultAsync();
 
             if (airport == null)
             {
@@ -49,7 +49,7 @@ namespace AndreAirLinesAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAirport(string id, Airport airport)
         {
-            if (id != airport.Acronym)
+            if (id != airport.IATA_Code)
             {
                 return BadRequest();
             }
@@ -101,7 +101,7 @@ namespace AndreAirLinesAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (AirportExists(airport.Acronym))
+                if (AirportExists(airport.IATA_Code))
                 {
                     return Conflict();
                 }
@@ -111,7 +111,7 @@ namespace AndreAirLinesAPI.Controllers
                 }
             }
 
-            return CreatedAtAction("GetAirport", new { id = airport.Acronym }, airport);
+            return CreatedAtAction("GetAirport", new { id = airport.IATA_Code }, airport);
         }
 
         // DELETE: api/Airports/5
@@ -132,7 +132,7 @@ namespace AndreAirLinesAPI.Controllers
 
         private bool AirportExists(string id)
         {
-            return _context.Airport.Any(e => e.Acronym == id);
+            return _context.Airport.Any(e => e.IATA_Code == id);
         }
     }
 }

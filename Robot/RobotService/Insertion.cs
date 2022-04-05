@@ -13,7 +13,7 @@ namespace Robot
 
          static readonly HttpClient client = new HttpClient();
 
-        public async Task InsertJsonBD()
+        public static async Task InsertJsonBD()
         {
             client.BaseAddress = new System.Uri("https://localhost:44348/");
 

@@ -32,8 +32,6 @@ namespace AndreAirLinesAPI.Model
             public string Email { get; set; }
 
             [JsonProperty("Address")]
-            //[ForeignKey("AddressId")]
-            //public int AddressId { get; set; }
             public virtual Address Address { get; set; }
 
 

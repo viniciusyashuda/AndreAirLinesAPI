@@ -4,14 +4,16 @@ using AndreAirLinesAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AndreAirLinesAPI.Migrations
 {
     [DbContext(typeof(AndreAirLinesAPIContext))]
-    partial class AndreAirLinesAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20220404014920_v5")]
+    partial class v5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +75,7 @@ namespace AndreAirLinesAPI.Migrations
 
             modelBuilder.Entity("AndreAirLinesAPI.Model.Airport", b =>
                 {
-                    b.Property<string>("IATA_Code")
+                    b.Property<string>("Acronym")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("AddressId")
@@ -82,7 +84,7 @@ namespace AndreAirLinesAPI.Migrations
                     b.Property<string>("Airport_Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IATA_Code");
+                    b.HasKey("Acronym");
 
                     b.HasIndex("AddressId");
 
@@ -96,23 +98,26 @@ namespace AndreAirLinesAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DestinationIATA_Code")
+                    b.Property<string>("DestinationAcronym")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("InclusionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OriginIATA_Code")
+                    b.Property<string>("OriginAcronym")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("SalePercentage")
+                        .HasColumnType("float");
 
                     b.Property<double>("Value")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DestinationIATA_Code");
+                    b.HasIndex("DestinationAcronym");
 
-                    b.HasIndex("OriginIATA_Code");
+                    b.HasIndex("OriginAcronym");
 
                     b.ToTable("BasePrice");
                 });
@@ -151,19 +156,19 @@ namespace AndreAirLinesAPI.Migrations
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DestinationIATA_Code")
+                    b.Property<string>("DestinationAcronym")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("OriginIATA_Code")
+                    b.Property<string>("OriginAcronym")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AircraftId");
 
-                    b.HasIndex("DestinationIATA_Code");
+                    b.HasIndex("DestinationAcronym");
 
-                    b.HasIndex("OriginIATA_Code");
+                    b.HasIndex("OriginAcronym");
 
                     b.ToTable("Flight");
                 });
@@ -217,8 +222,8 @@ namespace AndreAirLinesAPI.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("SalePercentage")
-                        .HasColumnType("float");
+                    b.Property<int?>("SalePercentageId")
+                        .HasColumnType("int");
 
                     b.Property<double>("TotalValue")
                         .HasColumnType("float");
@@ -232,6 +237,8 @@ namespace AndreAirLinesAPI.Migrations
                     b.HasIndex("FlightId");
 
                     b.HasIndex("PassengerCpf");
+
+                    b.HasIndex("SalePercentageId");
 
                     b.ToTable("Ticket");
                 });
@@ -249,11 +256,11 @@ namespace AndreAirLinesAPI.Migrations
                 {
                     b.HasOne("AndreAirLinesAPI.Model.Airport", "Destination")
                         .WithMany()
-                        .HasForeignKey("DestinationIATA_Code");
+                        .HasForeignKey("DestinationAcronym");
 
                     b.HasOne("AndreAirLinesAPI.Model.Airport", "Origin")
                         .WithMany()
-                        .HasForeignKey("OriginIATA_Code");
+                        .HasForeignKey("OriginAcronym");
 
                     b.Navigation("Destination");
 
@@ -268,11 +275,11 @@ namespace AndreAirLinesAPI.Migrations
 
                     b.HasOne("AndreAirLinesAPI.Model.Airport", "Destination")
                         .WithMany()
-                        .HasForeignKey("DestinationIATA_Code");
+                        .HasForeignKey("DestinationAcronym");
 
                     b.HasOne("AndreAirLinesAPI.Model.Airport", "Origin")
                         .WithMany()
-                        .HasForeignKey("OriginIATA_Code");
+                        .HasForeignKey("OriginAcronym");
 
                     b.Navigation("Aircraft");
 
@@ -308,6 +315,10 @@ namespace AndreAirLinesAPI.Migrations
                         .WithMany()
                         .HasForeignKey("PassengerCpf");
 
+                    b.HasOne("AndreAirLinesAPI.Model.BasePrice", "SalePercentage")
+                        .WithMany()
+                        .HasForeignKey("SalePercentageId");
+
                     b.Navigation("BasePrice");
 
                     b.Navigation("Class");
@@ -315,6 +326,8 @@ namespace AndreAirLinesAPI.Migrations
                     b.Navigation("Flight");
 
                     b.Navigation("Passenger");
+
+                    b.Navigation("SalePercentage");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,28 +15,15 @@ namespace AndreAirLinesAPI.Model
 
 
         [JsonProperty("Origin")]
-        //[ForeignKey("OriginAcronym")]
-        //public string OriginAcronym { get; set; }
         public virtual Airport Origin { get; set; }
 
 
-
-
         [JsonProperty("Destination")]
-        //[ForeignKey("DestinationAcronym")]
-        //public string DestinationAcronym { get; set; }
         public virtual Airport Destination { get; set; }
 
 
-
-
         [JsonProperty("Aircraft")]
-        //[ForeignKey("Aircraft_Id")]
-        //public string Aircraft_Id { get; set; }
         public virtual Aircraft Aircraft { get; set; }
-
-
-
 
 
         [JsonProperty("DepartureTime")]
@@ -45,23 +32,10 @@ namespace AndreAirLinesAPI.Model
         public DateTime DepartureTime { get; set; }
 
 
-
-
-
         [JsonProperty("ArrivalTime")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime ArrivalTime { get; set; }
-
-
-
-
-
-        [JsonProperty("Passenger")]
-        //[ForeignKey("PassengerCpf")]
-        //public string PassengerCpf { get; set; }
-        public virtual Passenger Passenger { get; set; }
-
 
 
 
@@ -76,8 +50,7 @@ namespace AndreAirLinesAPI.Model
                 + "\nDestination: " + Destination
                 + "\nAircraft: " + Aircraft
                 + "\nDeparture Time: " + DepartureTime
-                + "\nArrival Time: " + ArrivalTime
-                + "\nPassenger: " + Passenger + "\n";
+                + "\nArrival Time: " + ArrivalTime + "\n";
         }
 
         #endregion

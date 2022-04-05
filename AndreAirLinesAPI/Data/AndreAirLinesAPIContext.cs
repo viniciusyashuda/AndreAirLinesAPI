@@ -25,5 +25,11 @@ namespace AndreAirLinesAPI.Data
         public DbSet<AndreAirLinesAPI.Model.Airport> Airport { get; set; }
 
         public DbSet<AndreAirLinesAPI.Model.Flight> Flight { get; set; }
+
+        public DbSet<AndreAirLinesAPI.Model.Class> Class { get; set; }
+
+        public DbSet<AndreAirLinesAPI.Model.BasePrice> BasePrice { get; set; }
+
+        public DbSet<AndreAirLinesAPI.Model.Ticket> Ticket { get; set; }
     }
 }
